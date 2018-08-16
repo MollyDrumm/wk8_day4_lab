@@ -1,21 +1,22 @@
 package models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name="managers")
 public class Manager extends Employee {
     private int budget;
-    private String department;
+    private Department department;
     private List<Administrator> administrators;
 
-    public Manager(String name, int niNumber, int salary, int budget, String department) {
+    public Manager(String name, int niNumber, int salary, int budget) {
         super(name, niNumber, salary);
 
         this.budget = budget;
         this.department = department;
-        this.administrators = administrators;
+        this.administrators = new ArrayList<Administrator>();
     }
 
     public Manager() { }
@@ -29,16 +30,17 @@ public class Manager extends Employee {
         this.budget = budget;
     }
 
-    @Column(name = "department")
-    public String getDepartment() {
+    @OneToOne(mappedBy = "manager", fetch = FetchType.LAZY)
+    public Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(Department department) {
         this.department = department;
     }
 
-    @OneToMany(mappedBy="manager", fetch = FetchType.LAZY)
+    //TODO added manager - works
+    @OneToMany(mappedBy= "manager", fetch = FetchType.LAZY)
     public List<Administrator> getAdministrators() {
         return administrators;
     }
