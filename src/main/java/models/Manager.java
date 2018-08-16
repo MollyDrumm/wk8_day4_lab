@@ -1,8 +1,6 @@
 package models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -30,6 +28,7 @@ public class Manager extends Employee {
     public void setBudget(int budget) {
         this.budget = budget;
     }
+
     @Column(name = "department")
     public String getDepartment() {
         return department;
@@ -38,7 +37,8 @@ public class Manager extends Employee {
     public void setDepartment(String department) {
         this.department = department;
     }
-    @Column(name = "administrators")
+
+    @OneToMany(mappedBy="manager", fetch = FetchType.LAZY)
     public List<Administrator> getAdministrators() {
         return administrators;
     }
